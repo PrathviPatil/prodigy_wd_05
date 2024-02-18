@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Weather App</h1>
+    <div class="search-container">
+      <input type="text" id="locationInput" placeholder="Enter Location">
+      <button onclick="fetchWeather()">Search</button>
+    </div>
+    <div id="weatherInfo"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+  color: #fff;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 50px 0;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 1em;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+ function fetchWeather() {
+  var locationInput = document.getElementById('locationInput').value;
+
+  // Fetch weather data from the API using the location
+  fetch(https://api.openweathermap.org/data/2.5/weather?q=${locationInput}&appid=YOUR_API_KEY&units=metric)
+    .then(response => response.json())
+    .then(data => {
+      // Display weather information
+      var weatherInfo = document.getElementById('weatherInfo');
+      weatherInfo.innerHTML = `
+        <h2>Weather in ${data.name}, ${data.sys.country}</h2>
+        <p>Temperature: ${data.main.temp} °C</p>
+        <p>Weather: ${data.weather[0].description}</p>
+        <p>Humidity: ${data.main.humidity}%</p>
+        <p>Wind Speed: ${data.wind.speed} m/s</p>
+      `;
+    })
+    .catch(error => {
+      console.error('Error fetching weather data:', error);
+    });
+}
